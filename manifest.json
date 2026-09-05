@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Workday AI Autofill (NVIDIA)",
+  "version": "1.0.0",
+  "description": "AI-assisted resume parsing and autofill for NVIDIA Workday job applications. Requires explicit user confirmation before submission.",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["https://nvidia.wd5.myworkdayjobs.com/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [
+    {
+      "matches": ["https://nvidia.wd5.myworkdayjobs.com/*"],
+      "js": [
+        "utils/storage.js",
+        "utils/aiClient.js",
+        "content/dom-utils.js",
+        "content/mapper.js",
+        "content/filler.js",
+        "content/navigator.js",
+        "content/content.js"
+      ],
+      "css": ["content/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Workday AI Autofill",
+    "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
+  },
+  "options_page": "options/options.html",
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/pdf.min.js", "lib/pdf.worker.min.js", "lib/mammoth.browser.min.js"],
+      "matches": ["https://nvidia.wd5.myworkdayjobs.com/*"]
+    }
+  ]
+}
