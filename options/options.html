@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Workday AI Autofill -- Settings</title>
+  <link rel="stylesheet" href="../styles/tailwind.css" />
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+  <div class="max-w-lg mx-auto py-10 px-6">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 rounded-lg bg-nvidia flex items-center justify-center text-white font-bold">W</div>
+      <div>
+        <h1 class="text-lg font-semibold">Workday AI Autofill</h1>
+        <p class="text-xs text-gray-500">AI &amp; account settings</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-5">
+      <div class="bg-blue-50 border border-blue-200 text-blue-800 text-xs rounded-md px-3 py-2 leading-relaxed">
+        <strong>No key? No problem.</strong> The extension works fully in <em>mock mode</em> using heuristic
+        field-matching until you add a real API key below. Add one anytime to switch on AI-based
+        semantic mapping -- no other setting changes needed.
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1" for="provider">AI Provider</label>
+        <select id="provider" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-nvidia">
+          <option value="openai">OpenAI</option>
+          <option value="custom">Custom (OpenAI-compatible endpoint)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1" for="apiKey">API Key</label>
+        <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-nvidia" />
+        <p class="text-[11px] text-gray-400 mt-1">Stored only in this browser's local extension storage. Never synced or transmitted anywhere except the endpoint below.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1" for="model">Model</label>
+        <input id="model" type="text" placeholder="gpt-4o-mini"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-nvidia" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1" for="endpoint">API Endpoint</label>
+        <input id="endpoint" type="text" placeholder="https://api.openai.com/v1/chat/completions"
+               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-nvidia" />
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button id="saveBtn" class="bg-nvidia hover:bg-nvidia-dark text-white text-sm font-semibold rounded-md px-4 py-2 transition-colors">Save settings</button>
+        <button id="resetBtn" class="text-sm text-gray-500 hover:text-red-600">Clear all data</button>
+        <span id="savedMsg" class="hidden text-green-600 text-xs font-medium">Saved &#10003;</span>
+      </div>
+    </div>
+
+    <div class="mt-6 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+      <h2 class="text-sm font-semibold mb-2">Confidence threshold</h2>
+      <p class="text-xs text-gray-500 leading-relaxed">
+        Fields are only auto-filled when the matcher (heuristic or AI) is at least
+        <strong>72% confident</strong>. Anything below that is listed under "needs your review"
+        in the popup instead of being guessed. This threshold is fixed in code
+        (<code class="bg-gray-100 px-1 rounded">content/mapper.js</code>) to keep behavior predictable and auditable.
+      </p>
+    </div>
+  </div>
+
+  <script src="../utils/storage.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
